@@ -1,2 +1,6 @@
 # GT-seq_filters
-A shell script to identify loci from reduced representation sequencing methods compatible with the preparation of GT-seq libraries.
+GT-seq_filters is a series of shell scripts used to identify loci from reduced representation sequencing methods compatible with the preparation of GT-seq libraries. Bellow is a description of each script.
+
+## identify_GT-seq_loci.sh
+
+## rescue_loci.sh
