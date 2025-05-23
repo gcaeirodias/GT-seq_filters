@@ -80,6 +80,6 @@ process_data() {
 ## Run the main function
 process_data
 
-## Cleanup temporary files (optional)
+## Cleanup temporary files
 rm -f all_RADreads.bed new_mapped3.bed retained_rad-tags.bed *Strands.bed *overlap*.bed RADtags_*.bed
 
