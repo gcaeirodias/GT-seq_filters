@@ -65,8 +65,8 @@ process_data() {
 
     echo "Selecting loci adequate for GT-seq primer design..."
     awk 'BEGIN{OFS="\t"} {print $1,$2,$3,$4,$NF,$4-$2,$3-$NF,$NF-$4}' RADloci_SNPlist_tab.bed > SNP_distances_all_loci.bed
-    awk '$8 <= 83 && $6 >= 33 && $7 >= 33' SNP_distances_all_loci.bed |
-        awk 'BEGIN{OFS="\t"} {print $1,$2-1,$3,$4,$5,$6,$7,$8,$4-9,$5+8}' > GT-seq_good_loci.bed
+    awk '$8 <= 83 && $6 >= 33 && $7 >= 33' SNP_distances_all_loci.bed > max_dist_filter_SNP.bed
+    awk 'BEGIN{OFS="\t"} {print $1,$2-1,$3,$4,$5,$6,$7,$8,$4-9,$5+8}' > GT-seq_good_loci.bed
 
     echo "Extracting the complete RAD loci and the region adequate for GT-seq..."
     awk '{print $1":"$2"-"$3"\t"$9"\t"$10}' GT-seq_good_loci.bed > selected_GT-seq_loci.bed
