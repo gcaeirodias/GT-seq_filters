@@ -8,7 +8,7 @@ declare -A INPUT_FILES=(
     ["BED"]="chr_25_filt.bed"
 )
 
-## Verify that all input files exist
+## Verify all input files exist
 for key in "${!INPUT_FILES[@]}"; do
     if [[ ! -f "${INPUT_FILES[$key]}" ]]; then
         echo "ERROR: Input file $key (${INPUT_FILES[$key]}) not found!" >&2
@@ -21,7 +21,7 @@ WORKDIR="/users/guidias/taos-scratch/code_tests"
 mkdir -p "$WORKDIR"
 cd "$WORKDIR" || exit 1
 
-## Create a log file
+## Log file
 LOG_FILE="loci_for_GT-seq_$(date +%Y%m%d_%H%M%S).log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 echo "Starting processing at $(date)"
@@ -66,11 +66,11 @@ process_data() {
     echo "Selecting loci adequate for GT-seq primer design..."
     awk 'BEGIN{OFS="\t"} {print $1,$2,$3,$4,$NF,$4-$2,$3-$NF,$NF-$4}' RADloci_SNPlist_tab.bed > SNP_distances_all_loci.bed
     awk '$8 <= 83 && $6 >= 33 && $7 >= 33' SNP_distances_all_loci.bed > max_dist_filter_SNP.bed
-    awk 'BEGIN{OFS="\t"} {print $1,$2-1,$3,$4,$5,$6,$7,$8,$4-9,$5+8}' > GT-seq_good_loci.bed
+    awk 'BEGIN{OFS="\t"} {print $1,$2-1,$3,$4,$5,$6,$7,$8,$4-9,$5+8}' max_dist_filter_SNP.bed > GTseq_good_loci.bed
 
     echo "Extracting the complete RAD loci and the region adequate for GT-seq..."
-    awk '{print $1":"$2"-"$3"\t"$9"\t"$10}' GT-seq_good_loci.bed > selected_GT-seq_loci.bed
-    awk '{print $1":"$2"-"$3"\t"$2"\t"$3}' GT-seq_good_loci.bed > selected_RADloci.bed
+    awk '{print $1":"$2"-"$3"\t"$9"\t"$10}' GTseq_good_loci.bed > selected_GTseq_loci.bed
+    awk '{print $1":"$2"-"$3"\t"$2"\t"$3}' GTseq_good_loci.bed > selected_RADloci.bed
 
     echo "Loci filtering completed successfully at $(date)"
 }
