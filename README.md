@@ -8,7 +8,7 @@ GT-seq_filters is a series of shell scripts used to identify loci from RADseq da
 - vcftools
 
 ## 1. identify_GT-seq_loci.sh
-This script identifies loci that are compatible with GT-seq, following the parameters described in [Caeiro-Dias et al. (2024)](https://doi.org/10.22541/au.173501104.41338406/v1).
+This script identifies loci that are compatible with GT-seq, following the parameters described in [Caeiro-Dias et al. (2024)](https://doi.org/10.22541/au.173501104.41338406/v1) (also see rescue_loci.sh).
 
 ### Usage
 There are four variables containing the path to working directory and names of files needed to identify loci compatible with GT-seq. Those common files resulting from most pipelines used to identify SNPs from RADseq data (or other similar reduced representation sequencig methods).
@@ -27,6 +27,25 @@ DIR=[working directory]
 ~~~
 
 ## 2. rescue_loci.sh
+This script looks at loci that were not identified by identify_GT-seq_loci.sh (excluded loci) and removes the SNPs more close to the extreme of the RAD locus (one at a time). Then it re-filters the data using the same parameters as identify_GT-seq_loci.sh to rescue loci that can become compatible with GT-seq by excluding some of the SNPs on the extremes. This happens when a SNP is in the region defined for primer design; by excluding that SNP, the other SNPs in the same locus can be kept for primer design if enough flanking regions remain.
+
+### Usage
+~~~
+DIR=[working directory]
+        Path to working directory.
+
+DISCARD_DIRS=("discarded_1st_batch" "discarded_2nd_batch")
+        Names of directories used to save data from each round of loci rescue.
+
+MAX_DISTANCE=83
+        Maximum distance in bp allowed between more distant SNPs within a RAD locus of 150 bp.
+
+MIN_FLANKING=33
+        Minimum flanking region in bp without SNPs. This region includes 25 bp for primer desing plus 8 bp used to design in-silico probes flanking the SNPs. Those 8 bp considers the region between a SNP and the 25 bp for primer design.
+
+INSILICO_PROBE=8
+        Base pirs used to design in-silico probes flanking the SNPs.
+~~~
 
 ## 3. selected_loci_fasta_vcf.sh
 This script uses the BED files outputed by identify_GT-seq_loci.sh and rescue_loci.sh and gets the corresponding FASTA sequence from the FASTA genome file. It also exports a VCF file with the SNPs retained for GT-seq.
