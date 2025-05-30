@@ -4,7 +4,7 @@
 DIR=[working directory]
 DISCARD_DIRS=("discarded_1st_batch" "discarded_2nd_batch")
 MAX_DISTANCE=83
-MIN_EXTREME=33
+MIN_FLANKING=33
 PRIMER_BUFFER=8
 
 ## Function to process discarded loci
@@ -21,7 +21,7 @@ process_discarded_loci() {
         awk -v max_dist=$MAX_DISTANCE '$8 > max_dist {print $1,$2,$3}' SNP_distances_all_loci.bed | tr ' ' '\t' > $dir/hig_max_dist_filter_SNP.bed
 
         # Select loci with good distance but without required buffer at extremes
-        awk -v min_ext=$MIN_EXTREME '$6 < min_ext || $7 < min_ext {print $1,$2,$3}' max_dist_filter_SNP.bed | tr ' ' '\t' > $dir/SNPs_within_extremes_filter.bed
+        awk -v min_ext=$MIN_FLANKING '$6 < min_ext || $7 < min_ext {print $1,$2,$3}' max_dist_filter_SNP.bed | tr ' ' '\t' > $dir/SNPs_within_extremes_filter.bed
 
         # Merge both files with discarded loci
         cat $dir/hig_max_dist_filter_SNP.bed $dir/SNPs_within_extremes_filter.bed | sort -s -n -k1,1 > $dir/discarded_loci.bed
@@ -56,7 +56,7 @@ process_excludedSNPs() {
     awk '{print $1,$2,$3,$4,$NF}' $dir/discarded_RADloci_SNPlist_exclude_${exclusion}.bed | tr ' ' '\t' > $dir/rescued_loci_ex${exclusion}1.bed
 
     # Calculate distances
-    awk -v min_ext=$MIN_EXTREME -v max_dist=$MAX_DISTANCE \
+    awk -v min_ext=$MIN_FLANKING -v max_dist=$MAX_DISTANCE \
         '{print $1,$2,$3,$4,$5,$4-$2,$3-$5,$5-$4}' $dir/rescued_loci_ex${exclusion}1.bed | tr ' ' '\t' > $dir/rescued_loci_ex${exclusion}2.bed
 
     # Filter by maximum distance
@@ -82,8 +82,8 @@ merge_and_filter_results() {
     cat $dir/unique_exlast.bed $dir/unique_exfirst.bed $dir/exfirst.bed | sort > $dir/rescued_loci_1-2.bed
 
     # Filter by extreme distances
-    awk -v min_ext=$MIN_EXTREME '$6 >= min_ext && $7 >= min_ext' $dir/rescued_loci_1-1.bed | sort -s -n -k1,1 > $dir/rescued_loci_2-1.bed
-    awk -v min_ext=$MIN_EXTREME '$6 >= min_ext && $7 >= min_ext' $dir/rescued_loci_1-2.bed | sort -s -n -k1,1 > $dir/rescued_loci_2-2.bed
+    awk -v min_ext=$MIN_FLANKING '$6 >= min_ext && $7 >= min_ext' $dir/rescued_loci_1-1.bed | sort -s -n -k1,1 > $dir/rescued_loci_2-1.bed
+    awk -v min_ext=$MIN_FLANKING '$6 >= min_ext && $7 >= min_ext' $dir/rescued_loci_1-2.bed | sort -s -n -k1,1 > $dir/rescued_loci_2-2.bed
 
     # Find unique and common between the two filtered sets
     awk 'NR==FNR{a[$1,$2,$3];next}!(($1,$2,$3) in a)' $dir/rescued_loci_2-2.bed $dir/rescued_loci_2-1.bed > $dir/unique_2-1.bed
@@ -101,7 +101,7 @@ merge_and_filter_results() {
 
     # Validation checks
      awk -v max_dist=$MAX_DISTANCE '$NF < 0 || $8 > max_dist-1' $dir/rescued_loci_2.bed | tr ' ' '\t' > $dir/check_rescued1
-    awk -v min_ext=$MIN_EXTREME '$6 < min_ext || $7 < min_ext' $dir/rescued_loci_2.bed | tr ' ' '\t' > $dir/check_rescued2
+    awk -v min_ext=$MIN_FLANKING'$6 < min_ext || $7 < min_ext' $dir/rescued_loci_2.bed | tr ' ' '\t' > $dir/check_rescued2
 }
 
 ## Main Execution
