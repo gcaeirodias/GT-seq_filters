@@ -40,7 +40,7 @@ OUTPUT=[primer3_input].txt
 ~~~
 
 ## Citation
-If you use any of these scripts, please cite the pre-print where GT-seq_filters was first published: [Caeiro-Dias G, Osborne MJ, Turner TF. Time is of the essence: using archived samples in the development a GT-seq panel to preserve continuity of ongoing genetic monitoring. Authorea. December 24, 2024.](https://doi.org/10.22541/au.173501104.41338406/v1). 
+If you use any of these scripts included on GT-seq_filters, please cite the pre-print where GT-seq_filters was first published, while the article is in review: [Caeiro-Dias G, Osborne MJ, Turner TF. Time is of the essence: using archived samples in the development a GT-seq panel to preserve continuity of ongoing genetic monitoring. Authorea. December 24, 2024.](https://doi.org/10.22541/au.173501104.41338406/v1). 
 
 ## Contact
 Send your questions, suggestions, or comments to gcaeirodias@unm.edu
