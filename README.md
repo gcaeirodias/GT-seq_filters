@@ -12,4 +12,4 @@ vcftools
 ## 2. rescue_loci.sh
 
 ## 3. selected_loci_fasta_vcf.sh
-This script uses the merged BED files outputed by rescue_loci.sh and gets the corresponding FASTA sequence from the FASTA genome file. It also exports a VCF file with the SNPs retained for GT-seq.
+This script uses the BED files outputed by identify_GT-seq_loci.sh and rescue_loci.sh and gets the corresponding FASTA sequence from the FASTA genome file. It also exports a VCF file with the SNPs retained for GT-seq.
