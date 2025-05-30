@@ -1,11 +1,11 @@
 #!/bin/bash
 # Set directories and files
-DIR=[path to working directory]
+DIR=[working_directory]
 PRIMER3_FOLDER=primer3_input
 BED_GTSEQLOCI=all_selected_GTseq_loci.bed
 BED_RADLOCI=all_selected_RADloci.bed
 FASTA_RADLOCI=all_selected_RADloci.fa
-OUTPUT=[primer3 input].txt
+OUTPUT=[primer3_input].txt
 
 cd $DIR
 mkdir -p $PRIMER3_FOLDER
