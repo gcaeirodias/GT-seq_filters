@@ -1,11 +1,11 @@
 # GT-seq_filters
-GT-seq_filters is a series of shell scripts used to identify loci from reduced representation sequencing methods compatible with the preparation of GT-seq libraries. Bellow is a description of each script. Each script is presented in the order it should be used since each script uses the output of the previous script.
+GT-seq_filters is a series of shell scripts used to identify loci from reduced representation sequencing methods compatible with the preparation of Genotyping-in-Thousands by sequencing (GT-seq) libraries. Bellow is a description of each script. Each script is presented in the order it should be used since each script uses the output of the previous script.
 
 ## Required tools
-bedtools
-samtools
-vcflib
-vcftools
+- bedtools
+- samtools
+- vcflib
+- vcftools
 
 ## 1. identify_GT-seq_loci.sh
 
