@@ -1,5 +1,5 @@
 #!/bin/bash
-# Set directories and files
+# Directories and files
 DIR=[path to working directory]
 GENOME=[genome].fasta
 RECOV_RADLOCI=recovered_RADloci.bed
