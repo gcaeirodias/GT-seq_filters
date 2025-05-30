@@ -5,9 +5,9 @@ set -euo pipefail  # Enable strict error handling
 DIR=[working directory]
 
 declare -A INPUT_FILES=(
-    ["VCF"]="chr_25.recode.vcf"
-    ["BAM"]="complete.bam"
-    ["BED"]="chr_25_filt.bed"
+    ["VCF"]=[original].vcf
+    ["BAM"]=[original].bam
+    ["BED"]=[original].bed
 )
 
 # Verify all input files exist
@@ -17,10 +17,6 @@ for key in "${!INPUT_FILES[@]}"; do
         exit 1
     fi
 done
-
-## Create working directory
-mkdir -p $DIR
-cd $DIR || exit 1
 
 ## Log file
 LOG_FILE="loci_for_GT-seq_$(date +%Y%m%d_%H%M%S).log"
@@ -34,11 +30,11 @@ process_data() {
     local VCF="${INPUT_FILES["VCF"]}"
 
     echo "Converting RAD reads from BAM to BED..."
-    bedtools bamtobed -i "$BAM" |
+    bedtools bamtobed -i $BAM |
         awk '{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6}' > all_RADreads.bed
 
     echo "Processing BED file..."
-    awk '{print $1"\t"$2"\t"$3}' "$BED" > mapped_loci.bed
+    awk '{print $1"\t"$2"\t"$3}' $BED > mapped_loci.bed
 
     echo "Retaining RAD loci intersecting with filtered loci in BED file..."
     bedtools intersect -wa -a all_RADreads.bed -b mapped_loci.bed > retained_RADreads.bed
@@ -55,7 +51,7 @@ process_data() {
         awk '{print $1"\t"$2"\t"$3}' > non-overlap_F-R_RADloci.bed
 
     echo "Extracting loci with SNPs present in the VCF file..."
-    bedtools intersect -wa -wb -a non-overlap_F-R_RADloci.bed -b "$VCF" |
+    bedtools intersect -wa -wb -a non-overlap_F-R_RADloci.bed -b $VCF |
         awk '{print $1"\t"$2"\t"$3"\t"$5}' |
         sort -k1,1 -k2,2n > RADloci_and_SNPs.bed
     awk '{print $1":"$2"-"$3"\t"$5}' RADloci_and_SNPs.bed > RADloci_and_SNPs.txt
