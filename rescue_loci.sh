@@ -1,11 +1,11 @@
 #!/bin/bash
 
 ## Configuration
-WORK_DIR="/users/guidias/taos-scratch/code_tests"
+WORK_DIR="[full path to working directory]"
 DISCARD_DIRS=("discarded_1st_batch" "discarded_2nd_batch")
 MAX_DISTANCE=83
 MIN_EXTREME=33
-PRIMER_BUFFER=8  # 25+8 buffer mentioned in comments
+PRIMER_BUFFER=8
 
 ## Functions
 # Function to process discarded loci
