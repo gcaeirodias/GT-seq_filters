@@ -7,7 +7,7 @@ MAX_DISTANCE=83
 MIN_EXTREME=33
 PRIMER_BUFFER=8
 
-# Function to process discarded loci
+## Function to process discarded loci
 process_discarded_loci() {
     local dir=$1
     local input_bed=$2
@@ -40,7 +40,7 @@ process_discarded_loci() {
     merge_and_filter_results "$dir"
 }
 
-# Function to process SNP exclusions
+## Function to process SNP exclusions
 process_excludedSNPs() {
     local dir=$1
     local exclusion=$2
@@ -66,7 +66,7 @@ process_excludedSNPs() {
     awk '$8 >= 0' $dir/rescued_loci_ex${exclusion}3.bed | tr ' ' '\t' > $dir/rescued_loci_ex${exclusion}4.bed
 }
 
-# Function to merge and filter results
+## Function to merge and filter results
 merge_and_filter_results() {
     local dir=$1
 
