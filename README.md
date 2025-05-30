@@ -45,7 +45,7 @@ MIN_FLANKING=33
         Minimum flanking region in bp without SNPs. This region includes 25 bp for primer desing plus 8 bp used to design in-silico probes flanking the SNPs. Those 8 bp considers the region between a SNP and the 25 bp for primer design.
 
 INSILICO_PROBE=8
-        Base pirs used to design in-silico probes flanking the SNPs.
+        Base pairs used to design in-silico probes flanking the SNPs.
 ~~~
 
 ## 3. selected_loci_fasta_vcf.sh
