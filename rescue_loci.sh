@@ -5,7 +5,7 @@ DIR=[working directory]
 DISCARD_DIRS=("discarded_1st_batch" "discarded_2nd_batch")
 MAX_DISTANCE=83
 MIN_FLANKING=33
-PRIMER_BUFFER=8
+INSILICO_PROBE=8
 
 ## Function to process discarded loci
 process_discarded_loci() {
@@ -94,7 +94,7 @@ merge_and_filter_results() {
     cat $dir/unique_2-1.bed $dir/unique_2-2.bed $dir/rescued_commom.bed | sort -n -k1,1 -k2,2 -k3,3 > $dir/rescued_loci_2.bed
 
     # Create final output files with adjusted coordinates
-    awk -v buffer=$PRIMER_BUFFER '{print $1,$2-1,$3,$4,$5,$6,$7,$8,$4-9,$5+buffer}' $dir/rescued_loci_2.bed | tr ' ' '\t' > $dir/rescued_loci_3.bed
+    awk -v buffer=$INSILICO_PROBE '{print $1,$2-1,$3,$4,$5,$6,$7,$8,$4-9,$5+buffer}' $dir/rescued_loci_2.bed | tr ' ' '\t' > $dir/rescued_loci_3.bed
 
     awk '{print $1,$9,$10}' $dir/rescued_loci_3.bed | tr ' ' '\t' > $dir/rescued_loci_interest_region.bed
     awk '{print $1,$2,$3}' $dir/rescued_loci_3.bed | tr ' ' '\t' > $dir/rescued_interest_radtags.bed
