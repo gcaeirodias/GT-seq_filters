@@ -8,7 +8,10 @@ GT-seq_filters is a series of shell scripts used to identify loci from RADseq da
 - vcftools
 
 ## 1. identify_GT-seq_loci.sh
+This script identifies loci that are compatible with 
+~~~
 
+~~~
 ## 2. rescue_loci.sh
 
 ## 3. selected_loci_fasta_vcf.sh
