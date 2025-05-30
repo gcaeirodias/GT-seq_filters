@@ -7,7 +7,6 @@ MAX_DISTANCE=83
 MIN_EXTREME=33
 PRIMER_BUFFER=8
 
-## Functions
 # Function to process discarded loci
 process_discarded_loci() {
     local dir=$1
