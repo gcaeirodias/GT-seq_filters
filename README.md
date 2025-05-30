@@ -8,10 +8,24 @@ GT-seq_filters is a series of shell scripts used to identify loci from RADseq da
 - vcftools
 
 ## 1. identify_GT-seq_loci.sh
-This script identifies loci that are compatible with 
+This script identifies loci that are compatible with GT-seq, following the parameters described in [Caeiro-Dias G et al. (2024)](https://doi.org/10.22541/au.173501104.41338406/v1).
+
+### Usage
+There are four variables containing the path to working directory and names of files needed to identify loci compatible with GT-seq. Those common files resulting from most pipelines used to identify SNPs from RADseq data (or other similar reduced representation sequencig methods).
+~~~
+DIR=[working directory]
+        Path to working directory containing the input files.
+
+["VCF"]=[original].vcf
+        A VCF file containing the filtered SNPs identified from RADseq data from wich to identify loci compatible with GT-seq.
+
+["BAM"]=[original].bam
+        A BAM file containing the filtered alignments obtained from RADseq data for all individuals used to call variants from wich SNPs were identified.
+
+["BED"]=[original].bed
+        A BED file containing all the RAD loci intervals that have SNPs identified, i.e., the SNPs in the [original].vcf file.
 ~~~
 
-~~~
 ## 2. rescue_loci.sh
 
 ## 3. selected_loci_fasta_vcf.sh
