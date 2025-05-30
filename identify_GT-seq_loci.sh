@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail  # Enable strict error handling
 
-## Input files with validation
+## Directories and files
 DIR=[working directory]
 
 declare -A INPUT_FILES=(
@@ -10,7 +10,7 @@ declare -A INPUT_FILES=(
     ["BED"]="chr_25_filt.bed"
 )
 
-## Verify all input files exist
+# Verify all input files exist
 for key in "${!INPUT_FILES[@]}"; do
     if [[ ! -f "${INPUT_FILES[$key]}" ]]; then
         echo "ERROR: Input file $key (${INPUT_FILES[$key]}) not found!" >&2
@@ -18,7 +18,7 @@ for key in "${!INPUT_FILES[@]}"; do
     fi
 done
 
-## Working directory
+## Create working directory
 mkdir -p $DIR
 cd $DIR || exit 1
 
