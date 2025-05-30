@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## Configuration
+## Directories and files
 DIR=[working directory]
 DISCARD_DIRS=("discarded_1st_batch" "discarded_2nd_batch")
 MAX_DISTANCE=83
