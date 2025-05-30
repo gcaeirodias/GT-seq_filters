@@ -8,7 +8,7 @@ GT-seq_filters is a series of shell scripts used to identify loci from RADseq da
 - vcftools
 
 ## 1. identify_GT-seq_loci.sh
-This script identifies loci that are compatible with GT-seq, following the parameters described in [Caeiro-Dias G et al. (2024)](https://doi.org/10.22541/au.173501104.41338406/v1).
+This script identifies loci that are compatible with GT-seq, following the parameters described in [Caeiro-Dias et al. (2024)](https://doi.org/10.22541/au.173501104.41338406/v1).
 
 ### Usage
 There are four variables containing the path to working directory and names of files needed to identify loci compatible with GT-seq. Those common files resulting from most pipelines used to identify SNPs from RADseq data (or other similar reduced representation sequencig methods).
@@ -82,7 +82,7 @@ OUTPUT=[primer3_input].txt
 ~~~
 
 ## Citation
-If you use any of these scripts included on GT-seq_filters, please cite the pre-print where GT-seq_filters was first published, while the article is in review: [Caeiro-Dias G, Osborne MJ, Turner TF. Time is of the essence: using archived samples in the development a GT-seq panel to preserve continuity of ongoing genetic monitoring. Authorea. December 24, 2024.](https://doi.org/10.22541/au.173501104.41338406/v1). 
+If you use any of the scripts included on GT-seq_filters, please cite the pre-print where GT-seq_filters was first published, while the article is in review: [Caeiro-Dias G, Osborne MJ, Turner TF. Time is of the essence: using archived samples in the development a GT-seq panel to preserve continuity of ongoing genetic monitoring. Authorea. December 24, 2024.](https://doi.org/10.22541/au.173501104.41338406/v1). 
 
 ## Contact
 Send your questions, suggestions, or comments to gcaeirodias@unm.edu
