@@ -118,10 +118,10 @@ process_discarded_loci ${DISCARD_DIRS[1]} ${DISCARD_DIRS[1]}/discarded_2nd_batch
 # If needed, more batches of discarded loci can be processed similarly to "Process second batch" section above.
 
 # Merge all results
-cat "${DISCARD_DIRS[0]}/rescued_GTseq_loci.bed" \
-    "${DISCARD_DIRS[1]}/rescued_GTseq_loci.bed" | \
-    sort -n -k1,1 -k2,2 -k3,3 | awk '{print $1,$2,$3}' | tr ' ' '\t' > "recovered_GTseq_loci.bed"
+cat ${DISCARD_DIRS[0]}/rescued_GTseq_loci.bed \
+    ${DISCARD_DIRS[1]}/rescued_GTseq_loci.bed | \
+    sort -n -k1,1 -k2,2 -k3,3 | awk '{print $1,$2,$3}' | tr ' ' '\t' > recovered_GTseq_loci.bed
 
-cat "${DISCARD_DIRS[0]}/rescued_RADloci.bed" \
-    "${DISCARD_DIRS[1]}/rescued_RADloci.bed" | \
-    sort -n -k1,1 -k2,2 -k3,3 | awk '{print $1,$2,$3}' | tr ' ' '\t' > "recovered_RAD_loci.bed"
+cat ${DISCARD_DIRS[0]}/rescued_RADloci.bed \
+    ${DISCARD_DIRS[1]}/rescued_RADloci.bed | \
+    sort -n -k1,1 -k2,2 -k3,3 | awk '{print $1,$2,$3}' | tr ' ' '\t' > recovered_RAD_loci.bed
