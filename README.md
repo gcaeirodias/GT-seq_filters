@@ -16,3 +16,31 @@ This script uses the BED files outputed by identify_GT-seq_loci.sh and rescue_lo
 
 ## 4. fasta2primer3.sh
 This script converts a FASTA file to a primer3 input TXT file. It uses the RAD loci FASTA file (all_selected_RADloci.fa) outputed by selected_loci_fasta_vcf.sh to get the sequences that will be used as template to design primers by [primer3](https://github.com/primer3-org/primer3). Only the target regions for GT-sq within the RAD loci are passed to primer3 input.
+
+### Usage
+There are six variables containing the path to working directory and names of files used by fasta2primer3.sh that will be used contaiThis script can be run from the directory containing the outputs from selected_loci_fasta_vcf.sh. 
+~~~
+DIR=[path working directory]
+        Path to working directory.
+
+PRIMER3_FOLDER=primer3_input
+        Name a folder that will be created where to save the output.
+
+BED_GTSEQLOCI=all_selected_GTseq_loci.bed
+        Name (and path if needed) of the BED file containing the intervals corresponding to filtered RAD loci (target regions) that can be used for GT-seq (GT-seq loci). Outputed by selected_loci_fasta_vcf.sh.
+
+BED_RADLOCI=all_selected_RADloci.bed
+        Name (and path if needed) of the BED file containing the intervals corresponding to RAD loci. Outputed by selected_loci_fasta_vcf.sh.
+
+FASTA_RADLOCI=all_selected_RADloci.fa
+        Name (and path if needed) of the FASTA file containing the intervals corresponding to RAD loci. Outputed by selected_loci_fasta_vcf.sh.
+
+OUTPUT=[primer3_input].txt
+        Name of the output files. This is a TXT file that will be used as input for primer3.
+~~~
+
+## Citation
+If you use any of these scripts, please cite the pre-print where GT-seq_filters was first published: [Caeiro-Dias G, Osborne MJ, Turner TF. Time is of the essence: using archived samples in the development a GT-seq panel to preserve continuity of ongoing genetic monitoring. Authorea. December 24, 2024.](https://doi.org/10.22541/au.173501104.41338406/v1). 
+
+## Contact
+Send your questions, suggestions, or comments to gcaeirodias@unm.edu
