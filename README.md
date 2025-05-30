@@ -15,7 +15,7 @@ GT-seq_filters is a series of shell scripts used to identify loci from reduced r
 This script uses the BED files outputed by identify_GT-seq_loci.sh and rescue_loci.sh and gets the corresponding FASTA sequence from the FASTA genome file. It also exports a VCF file with the SNPs retained for GT-seq.
 
 ### Usage
-There are seven variables containing the path to working directory and names of files used by selected_loci_fasta_vcf.sh. This script can be run from the directory containing the outputs from identify_GT-seq_loci.sh and rescue_loci.sh. 
+There are seven variables containing the path to working directory and names of files used by selected_loci_fasta_vcf.sh that should be modified accordingly. This script can be run from the directory containing the outputs from identify_GT-seq_loci.sh and rescue_loci.sh. 
 ~~~
 DIR=[path working directory]
         Path to working directory.
@@ -23,7 +23,7 @@ DIR=[path working directory]
 GENOME=[genome.fasta]
         FASTA file (and path if needed) containing the genome used as reference to identify SNPs from RADseq data.
  
-RECOV_RADLOCI="/users/guidias/taos-scratch/GTseq_primer_design/Bluntnose_shiner/recovered_interest_radtags.bed
+RECOV_RADLOCI=/users/guidias/taos-scratch/GTseq_primer_design/Bluntnose_shiner/recovered_interest_radtags.bed
         
 RECOV_GTSEQLOCI="/users/guidias/taos-scratch/GTseq_primer_design/Bluntnose_shiner/recovered_interest_regions.bed"
         
@@ -39,7 +39,7 @@ VCF="5-SNP_filt/Nsim_5065_loci_11057SNPs.recode.vcf"
 This script converts a FASTA file to a primer3 input TXT file. It uses the RAD loci FASTA file (all_selected_RADloci.fa) outputed by selected_loci_fasta_vcf.sh to get the sequences that will be used as template to design primers by [primer3](https://github.com/primer3-org/primer3). Only the target regions for GT-sq within the RAD loci are passed to primer3 input.
 
 ### Usage
-There are six variables containing the path to working directory and names of files used by fasta2primer3.sh. This script can be run from the directory containing the outputs from selected_loci_fasta_vcf.sh. 
+There are six variables containing the path to working directory and names of files used by fasta2primer3.sh that should be modified accordingly. This script can be run from the directory containing the outputs from selected_loci_fasta_vcf.sh. 
 ~~~
 DIR=[path working directory]
         Path to working directory.
