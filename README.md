@@ -1,5 +1,5 @@
 # GT-seq_filters
-GT-seq_filters is a series of shell scripts used to identify loci from reduced representation sequencing methods compatible with the preparation of Genotyping-in-Thousands by sequencing (GT-seq) libraries. Bellow is a description of each script. Each script is presented in the order it should be used since each script uses the output of the previous script.
+GT-seq_filters is a series of shell scripts used to identify loci from RADseq data compatible with the preparation of Genotyping-in-Thousands by sequencing (GT-seq) libraries. Also one script is provided to create an input file for [primer3](https://github.com/primer3-org/primer3) for further primer design for GT-seq. Bellow is a description of each script. Each script is presented in the order it should be used since each script uses the output of the previous script.
 
 ## Required tools
 - bedtools
@@ -20,23 +20,27 @@ There are seven variables containing the path to working directory and names of 
 DIR=[path working directory]
         Path to working directory.
 
-GENOME=[genome.fasta]
+GENOME=[genome].fasta
         FASTA file (and path if needed) containing the genome used as reference to identify SNPs from RADseq data.
  
-RECOV_RADLOCI=/users/guidias/taos-scratch/GTseq_primer_design/Bluntnose_shiner/recovered_interest_radtags.bed
+RECOV_RADLOCI=recovered_RADloci.bed
+        BED file containing the recovered RAD loci intervals. Outputed by rescue_loci.sh.
+
+RECOV_GTSEQLOCI=recovered_GTseq_loci.bed
+        BED file containing the recovered intervals compatible with GT-seq (GT-seq loci). Outputed by rescue_loci.sh.
+
+SELEC_RADLOCI=selected_RADloci.bed
+        BED file containing the originally identified RAD loci intervals containing region adequate for GT-seq. Outputed by identify_GT-seq_loci.sh.
         
-RECOV_GTSEQLOCI="/users/guidias/taos-scratch/GTseq_primer_design/Bluntnose_shiner/recovered_interest_regions.bed"
-        
-SELEC_RADLOCI="/users/guidias/taos-scratch/GTseq_primer_design/Bluntnose_shiner/interest_radtags.bed"
-        
-SELEC_GTSEQLOCI="/users/guidias/taos-scratch/GTseq_primer_design/Bluntnose_shiner/interest_regions.bed"
-        
-VCF="5-SNP_filt/Nsim_5065_loci_11057SNPs.recode.vcf"
-        
+SELEC_GTSEQLOCI=selected_GTseq_loci.bed
+        BED file containing the originally identified region adequate for GT-seq. Outputed by identify_GT-seq_loci.sh.
+
+VCF=[original].vcf
+        VCF file containing the original filtered SNPs from RADseq data. 
 ~~~
 
 ## 4. fasta2primer3.sh
-This script converts a FASTA file to a primer3 input TXT file. It uses the RAD loci FASTA file (all_selected_RADloci.fa) outputed by selected_loci_fasta_vcf.sh to get the sequences that will be used as template to design primers by [primer3](https://github.com/primer3-org/primer3). Only the target regions for GT-sq within the RAD loci are passed to primer3 input.
+This script converts a FASTA file to a primer3 input TXT file. It uses the RAD loci FASTA file (all_selected_RADloci.fa) outputed by selected_loci_fasta_vcf.sh to get the sequences that will be used as template to design primers by primer3. Only the target regions for GT-sq within the RAD loci are passed to primer3 input.
 
 ### Usage
 There are six variables containing the path to working directory and names of files used by fasta2primer3.sh that should be modified accordingly. This script can be run from the directory containing the outputs from selected_loci_fasta_vcf.sh. 
