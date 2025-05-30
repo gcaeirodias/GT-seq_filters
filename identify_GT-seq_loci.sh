@@ -2,6 +2,8 @@
 set -euo pipefail  # Enable strict error handling
 
 ## Input files with validation
+DIR=[working directory]
+
 declare -A INPUT_FILES=(
     ["VCF"]="chr_25.recode.vcf"
     ["BAM"]="complete.bam"
@@ -17,9 +19,8 @@ for key in "${!INPUT_FILES[@]}"; do
 done
 
 ## Working directory
-WORKDIR="/users/guidias/taos-scratch/code_tests"
-mkdir -p "$WORKDIR"
-cd "$WORKDIR" || exit 1
+mkdir -p $DIR
+cd $DIR || exit 1
 
 ## Log file
 LOG_FILE="loci_for_GT-seq_$(date +%Y%m%d_%H%M%S).log"
