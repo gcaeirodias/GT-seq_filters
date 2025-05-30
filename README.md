@@ -30,6 +30,7 @@ DIR=[working directory]
 This script looks at loci that were not identified by identify_GT-seq_loci.sh (excluded loci) and removes the SNPs more close to the extreme of the RAD locus (one at a time). Then it re-filters the data using the same parameters as identify_GT-seq_loci.sh to rescue loci that can become compatible with GT-seq by excluding some of the SNPs on the extremes. This happens when a SNP is in the region defined for primer design; by excluding that SNP, the other SNPs in the same locus can be kept for primer design if enough flanking regions remain.
 
 ### Usage
+There are five variables containing the path to working directory, names of directories to save outputs, and the parameters used for GT-seq loci filtering. Those parameters were considered for a maximum of 150 bp sequencing of GT-seq loci.
 ~~~
 DIR=[working directory]
         Path to working directory.
