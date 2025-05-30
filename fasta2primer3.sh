@@ -1,5 +1,5 @@
 #!/bin/bash
-# Set directories and files
+# Directories and files
 DIR=[working_directory]
 PRIMER3_FOLDER=primer3_input
 BED_GTSEQLOCI=all_selected_GTseq_loci.bed
