@@ -140,7 +140,7 @@ PRIMERS_FASTA=[primer_pairs_1_singleblast].fa
 ~~~
 
 ## 7. alternative_primers.sh
-This is a dirty script (needs readability and conciseness improvments) that selects alternative primers based on the provided primer pair index. This script is used when a primer pairs was discarded in the previous step due to multiple hits on the reference geneome of at least one of the primers (forward or reverse). The FASTA file output by alternative_primers.sh should be used again as input to blast_primers.sh to identify primers with multiple hits on the reference genome.
+This is a dirty script (needs readability and conciseness improvements) that selects alternative primers based on the provided primer pair index. This script is used when a primer pairs was discarded in the previous step due to multiple hits on the reference geneome of at least one of the primers (forward or reverse). The FASTA file output by alternative_primers.sh should be used again as input to blast_primers.sh to identify primers with multiple hits on the reference genome.
 
 ### Usage
 There are 9 variables to define with the path to working directory, names of file input and output files, and primer pairs indices.
