@@ -1,4 +1,4 @@
-# GT-seq_filters
+# GT-seq_filters ([DOI: 10.5281/zenodo.17943592](https://zenodo.org/records/17943592))
 GT-seq_filters is a series of shell scripts used to identify loci from RADseq data compatible with the preparation of Genotyping-in-Thousands by sequencing (GT-seq) libraries. Also one script is provided to create an input file for [primer3](https://github.com/primer3-org/primer3) for further primer design for GT-seq. Bellow is a description of each script. Each script is presented in the order it should be used since each script uses the output of the previous script.
 
 ## Required tools
