@@ -85,7 +85,7 @@ There are six variables containing the path to working directory and names of fi
 DIR=[path working directory]
         Path to working directory.
 
-PRIMER3_FOLDER=primer3_input
+PRIMER3_FOLDER=primer3
         Name a folder that will be created where to save the output.
 
 BED_GTSEQLOCI=all_selected_GTseq_loci.bed
@@ -98,7 +98,22 @@ FASTA_RADLOCI=all_selected_RADloci.fa
         Name (and path if needed) of the FASTA file containing the intervals corresponding to RAD loci. Outputed by selected_loci_fasta_vcf.sh.
 
 OUTPUT=[primer3_input].txt
-        Name of the output files. This is a TXT file that will be used as input for primer3.
+        Name of the output file. This is a TXT file that will be used as input for primer3.
+~~~
+
+## 5. GT-seq_primer_pairs.sh
+After running primer3, this script is used to obtain the forward and reverse primer sequences from primer3 output.
+
+### Usage
+There are four variables containing the path to working directory, name of file input file, the target primer sequence to get from primer3 output, and the output file name.
+~~~
+DIR=[path working directory]
+        Path to working directory.
+INPUT=[primer3_output].txt
+        Name of the TXT file outputed by primer3 with all designed primers.
+PRIMER_PAIR=0
+        The target primer sequence index to extract from primer3 output. Oligo sequence index from primer3 output is zero based, i.e., the primer pair from the top of the list is identified with a zero ("PRIMER_LEFT_0_SEQUENCE"; "PRIMER_RIGHT_0_SEQUENCE"). See primer3 [manual](https://primer3.org/manual.html) for further details.
+FASTA="${WORK_DIR}/ARS_primer_pairs_${PRIMER_PAIR}.fa"
 ~~~
 
 ## Citation
