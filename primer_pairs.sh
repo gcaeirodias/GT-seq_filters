@@ -10,10 +10,10 @@ FASTA="${WORK_DIR}/primer_pairs_${PRIMER_PAIR}.fa"
 TEMP_DIR=$(mktemp -d)
 trap "rm -rf $TEMP_DIR" EXIT
 
-cd "$INPUT_DIR"
+cd "$DIR"
 # Check if input file exists
-if [[ ! -f "$INPUT_FILE" ]]; then
-    echo "Error: Input file not found: $INPUT_FILE" >&2
+if [[ ! -f "$INPUT" ]]; then
+    echo "Error: Input file not found: $INPUT" >&2
     exit 1
 fi
 
@@ -72,7 +72,7 @@ END {
         printf ">%s_PRIMER_LEFT\n%s\n>%s_PRIMER_RIGHT\n%s\n", 
                seq_id, left_primer, seq_id, right_primer
     }
-}' "$INPUT_FILE" > "$PRIMER_FASTA"
+}' "$INPUT" > "$PRIMER_FASTA"
 # Check if output was created successfully and count the number of loci with primer pairs succesfully designed
 if [[ ! -s "$PRIMER_FASTA" ]]; then
     echo "Warning: No primers found in output." >&2
