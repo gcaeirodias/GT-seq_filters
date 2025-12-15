@@ -6,6 +6,8 @@ GT-seq_filters is a series of shell scripts used to identify loci from RADseq da
 - samtools
 - vcflib
 - vcftools
+- primer3
+- blast-plus
 
 ## 1. identify_GT-seq_loci.sh
 This script identifies loci that are compatible with GT-seq, following the parameters described in [Caeiro-Dias et al. (2024)](https://doi.org/10.22541/au.173501104.41338406/v1) (also see rescue_loci.sh).
@@ -26,7 +28,7 @@ DIR=[working directory]
         A BED file containing all the RAD loci intervals that have SNPs identified, i.e., the SNPs in the [original].vcf file.
 ~~~
 
-## 2. rescue_loci.sh
+## 2. rescue_loci.sh (optional)
 This script looks at loci that were not identified by identify_GT-seq_loci.sh (excluded loci) and removes the SNPs more close to the extreme of the RAD locus (one at a time). Then it re-filters the data using the same parameters as identify_GT-seq_loci.sh to rescue loci that can become compatible with GT-seq by excluding some of the SNPs on the extremes. This happens when a SNP is in the region defined for primer design; by excluding that SNP, the other SNPs in the same locus can be kept for primer design if enough flanking regions remain.
 
 ### Usage
@@ -77,7 +79,7 @@ VCF=[original].vcf
 ~~~
 
 ## 4. fasta2primer3.sh
-This script converts a FASTA file to a primer3 input TXT file. It uses the RAD loci FASTA file (all_selected_RADloci.fa) outputed by selected_loci_fasta_vcf.sh to get the sequences that will be used as template to design primers by primer3. Only the target regions for GT-sq within the RAD loci are passed to primer3 input.
+This script converts a FASTA file to a primer3 input TXT file. It uses the RAD loci FASTA file (all_selected_RADloci.fa) outputed by selected_loci_fasta_vcf.sh to get the sequences that will be used as template to design primers by primer3. Only the target regions for GT-sq within the RAD loci are passed to primer3 input. See primer3 [manual](https://primer3.org/manual.html) for further details on input file format.
 
 ### Usage
 There are six variables containing the path to working directory and names of files used by fasta2primer3.sh that should be modified accordingly. This script can be run from the directory containing the outputs from selected_loci_fasta_vcf.sh. 
@@ -112,12 +114,62 @@ DIR=[path working directory]
 INPUT=[primer3_output].txt
         Name of the TXT file outputed by primer3 with all designed primers.
 PRIMER_PAIR=0
-        The target primer sequence index to extract from primer3 output. Oligo sequence index from primer3 output is zero based, i.e., the primer pair from the top of the list is identified with a zero ("PRIMER_LEFT_0_SEQUENCE"; "PRIMER_RIGHT_0_SEQUENCE"). See primer3 [manual](https://primer3.org/manual.html) for further details.
-FASTA="${WORK_DIR}/ARS_primer_pairs_${PRIMER_PAIR}.fa"
+        The target primer sequence index to extract from primer3 output. Oligo sequence index from primer3 output is zero based, i.e., the primer pair from the top of the list is identified with a zero ("PRIMER_LEFT_0_SEQUENCE"; "PRIMER_RIGHT_0_SEQUENCE"). See primer3 manual for further output file format details.
+FASTA=[output].fa"
+        Name of the output FASTA file containing the primer pairs sequences extracted from primer3 output.
 ~~~
 
+## 6. blast_primers.sh
+This is a dirty script (needs readability and conciseness improvments) that maps each primer sequence to the reference genome using the blastn application from blast+. Then extracts primer sequences that both pairs map to the reference genome with 100% coverage and 100% identity, to avoid off-target amplicon sequencing.
+
+### Usage
+There are six variables to define with the path to working directory as well as names of file input and output files.
+~~~
+DIR=[path working directory]
+        Path to working directory.
+GENOME=[path/to/reference_fenome.fasta]
+        Path to directory containing the FASTA file and name of the file with the genome used as reference to identify SNPs from RADseq data.
+DB=[path/to/local_blast_database_prefix]
+        Path to directory containing the local blast database created from the FASTA file containing the reference genome or to where local blast database should be saved, including the batabase file names prefix.
+QUERY=[primer_pairs].fa
+        FASTA file containing the primer pairs sequences extracted from primer3 output. This file is the output from the script GT-seq_primer_pairs.sh
+BLAST_RESULTS=[primer_pairs_0_blast].txt
+        Name of the output from blastn containing the blast results. 
+PRIMERS_FASTA=[primer_pairs_1_singleblast].fa
+        Name of the output FASTA file containing the primer pairs sequences that map to a single region of the genome with 100% coverage and 100% identity.
+~~~
+
+## 7. alternative_primers.sh
+This is a dirty script (needs readability and conciseness improvments) that selects alternative primers based on the provided primer pair index. This script is used when a primer pairs was discarded in the previous step due to multiple hits on the reference geneome of at least one of the primers (forward or reverse). The FASTA file output by alternative_primers.sh should be used again as input to blast_primers.sh to identify primers with multiple hits on the reference genome.
+
+### Usage
+There are 9 variables to define with the path to working directory, names of file input and output files, and primer pairs indices.
+~~~
+DIR=[path working directory]
+        Path to working directory.
+INPUT=[primer3_output].txt
+        Name of the TXT file outputed by primer3 with all designed primers.
+FASTA_PREV_PRIMERS=[primer_pairs_0].fa
+        Name of the FASTA file containing primer pair sequences outputed by the script GT-seq_primer_pairs.sh
+FASTA_PREV_SINGLE_BLAST_PRIM=[primer_pairs_0_singleblast].fa
+        Name of the FASTA file containing primer pair sequences with a sigle hit on the reference genome as outputed by the script blast_primers.sh.
+PREVIOUS_PAIR=0
+        The index from primer pair extracted from primer3 output.
+PRIMER_PAIR=1
+        The index from alternative primer pair to be extracted from primer3 output.
+PRIMER_LIST=[primer_pairs_0].txt
+        Name of a TXT file to be outputed with the list of primer pairs extracted from primer3 output.
+PRIMER_LIST_SINGLE_MATCH=[primer_pairs_0_singleblast].txt
+        Name of a TXT file to be outputed with the list of primer pairs with a sigle hit on the reference genome.
+PRIMER_FASTA=[primer_pairs_1].fa
+        Name of the output FASTA file containing the alternative primer pairs sequences extracted from primer3 output.
+~~~
+
+## Note: Iteractively select alternative primers
+Step 6. and 7. can be used iteractively to identify primers with multiple hits on the reference genome and then select alternative primers from primer3 output.
+
 ## Citation
-If you use any of the scripts included on GT-seq_filters, please cite the pre-print where GT-seq_filters was first published, while the article is in review: [Caeiro-Dias G, Osborne MJ, Turner TF. Time is of the essence: using archived samples in the development a GT-seq panel to preserve continuity of ongoing genetic monitoring. Authorea. December 24, 2024.](https://doi.org/10.22541/au.173501104.41338406/v1). 
+If you use any of the scripts included on GT-seq_filters pipeline, please cite the pre-print where GT-seq_filters was first published, while the article is in review: [Caeiro-Dias G, Osborne MJ, Turner TF. Time is of the essence: using archived samples in the development a GT-seq panel to preserve continuity of ongoing genetic monitoring. Authorea. December 24, 2024.](https://doi.org/10.22541/au.173501104.41338406/v1). 
 
 ## Contact
 Send your questions, suggestions, or comments to gcaeirodias@unm.edu
